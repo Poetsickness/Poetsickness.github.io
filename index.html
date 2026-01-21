@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For Someone Special</title>
+    <title>I Judged You Wrong</title>
     <style>
         :root {
-            --primary-color: #667eea;
-            --secondary-color: #764ba2;
-            --text-color: #2c3e50;
-            --light-text: #7f8c8d;
-            --accent-color: #e74c3c;
+            --magazine-dark: #1a1a1a;
+            --magazine-cream: #f5f1e8;
+            --accent-burgundy: #8b4049;
+            --accent-gold: #d4af37;
+            --text-primary: #2c2c2c;
+            --text-secondary: #6b6b6b;
         }
 
         * {
@@ -21,39 +22,40 @@
 
         body {
             font-family: 'Georgia', serif;
+            background: var(--magazine-cream);
+            color: var(--text-primary);
             line-height: 1.8;
-            color: var(--text-color);
-            overflow-x: hidden;
         }
 
-        /* Floating hearts background */
-        .floating-hearts {
+        /* Floating Hearts Animation */
+        .floating-hearts-container {
             position: fixed;
-            width: 100%;
-            height: 100%;
             top: 0;
             left: 0;
+            width: 100%;
+            height: 100%;
             pointer-events: none;
-            z-index: 0;
+            z-index: 1;
+            overflow: hidden;
         }
 
         .floating-heart {
             position: absolute;
-            color: rgba(231, 76, 60, 0.2);
-            font-size: 30px;
-            animation: float 15s infinite;
+            font-size: 20px;
+            opacity: 0;
+            animation: floatUp 8s ease-in infinite;
         }
 
-        @keyframes float {
+        @keyframes floatUp {
             0% {
                 transform: translateY(100vh) rotate(0deg);
                 opacity: 0;
             }
             10% {
-                opacity: 1;
+                opacity: 0.6;
             }
             90% {
-                opacity: 1;
+                opacity: 0.3;
             }
             100% {
                 transform: translateY(-100px) rotate(360deg);
@@ -61,310 +63,1047 @@
             }
         }
 
-        .floating-heart:nth-child(1) { left: 10%; animation-delay: 0s; }
-        .floating-heart:nth-child(2) { left: 25%; animation-delay: 3s; }
-        .floating-heart:nth-child(3) { left: 40%; animation-delay: 6s; }
-        .floating-heart:nth-child(4) { left: 55%; animation-delay: 2s; }
-        .floating-heart:nth-child(5) { left: 70%; animation-delay: 5s; }
-        .floating-heart:nth-child(6) { left: 85%; animation-delay: 8s; }
-
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
+        /* Magazine Header */
+        .magazine-header {
+            background: var(--magazine-dark);
+            color: var(--magazine-cream);
             text-align: center;
-            padding: 120px 20px 80px;
+            padding: 3rem 2rem 2rem;
+            border-bottom: 3px solid var(--accent-gold);
             position: relative;
-            z-index: 1;
+            z-index: 2;
         }
 
-        .hero-heart {
-            font-size: 80px;
-            animation: heartbeat 1.5s ease-in-out infinite;
-            display: inline-block;
-            margin-bottom: 20px;
+        .magazine-title {
+            font-size: 1rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--accent-gold);
+            margin-bottom: 0.5rem;
+            font-weight: normal;
         }
 
-        @keyframes heartbeat {
-            0%, 100% {
-                transform: scale(1);
-            }
-            25% {
-                transform: scale(1.1);
-            }
-            50% {
-                transform: scale(1);
-            }
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            animation: fadeInUp 1s ease;
-        }
-
-        .hero p {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
-            animation: fadeInUp 1.2s ease;
+        .magazine-subtitle {
+            font-size: 0.9rem;
+            letter-spacing: 0.1em;
+            color: var(--text-secondary);
             font-style: italic;
         }
 
-        /* Content Sections */
-        section {
-            padding: 80px 20px;
+        /* Hero Article */
+        .hero-article {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            background: white;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 2;
+        }
+
+        .article-header {
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .article-category {
+            color: var(--accent-burgundy);
+            font-size: 0.85rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .article-title {
+            font-size: 3rem;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            font-weight: normal;
+            color: var(--magazine-dark);
+        }
+
+        .article-subtitle {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            font-style: italic;
+            font-weight: normal;
+            margin-bottom: 1.5rem;
+        }
+
+        .article-meta {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            letter-spacing: 0.05em;
+        }
+
+        /* Drop Cap */
+        .drop-cap::first-letter {
+            float: left;
+            font-size: 5rem;
+            line-height: 0.8;
+            margin: 0.1rem 0.1rem 0 0;
+            color: var(--accent-burgundy);
+            font-weight: bold;
+        }
+
+        /* Article Content */
+        .article-content {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            line-height: 1.9;
+        }
+
+        .article-content p {
+            margin-bottom: 1.5rem;
+            text-align: justify;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .article-content p.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .pull-quote {
+            font-size: 1.8rem;
+            line-height: 1.4;
+            color: var(--accent-burgundy);
+            text-align: center;
+            margin: 3rem 0;
+            padding: 2rem 3rem;
+            border-left: 4px solid var(--accent-gold);
+            border-right: 4px solid var(--accent-gold);
+            font-style: italic;
+            background: var(--magazine-cream);
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .pull-quote.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Interactive Timeline */
+        .timeline-section {
+            background: var(--magazine-dark);
+            padding: 4rem 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .timeline-title {
+            text-align: center;
+            color: var(--accent-gold);
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            font-weight: normal;
+        }
+
+        .timeline {
             max-width: 900px;
             margin: 0 auto;
             position: relative;
-            z-index: 1;
-            background: white;
         }
 
-        section h2 {
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background: var(--accent-gold);
+        }
+
+        .timeline-item {
+            margin-bottom: 3rem;
+            position: relative;
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .timeline-item:nth-child(even) {
+            transform: translateX(50px);
+        }
+
+        .timeline-item:nth-child(even).visible {
+            transform: translateX(0);
+        }
+
+        .timeline-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            width: 45%;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-left: 0;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-left: auto;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background: var(--accent-gold);
+            border: 4px solid var(--magazine-dark);
+            border-radius: 50%;
+            top: 20px;
+        }
+
+        .timeline-content h3 {
+            color: var(--accent-burgundy);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .timeline-emoji {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        /* Feature Boxes */
+        .feature-section {
+            background: var(--magazine-cream);
+            padding: 4rem 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .feature-section-title {
             text-align: center;
             font-size: 2.5rem;
-            margin-bottom: 2rem;
-            color: var(--primary-color);
+            margin-bottom: 3rem;
+            color: var(--magazine-dark);
         }
 
-        .confession-text {
-            font-size: 1.2rem;
-            line-height: 2;
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .confession-text p {
-            margin-bottom: 1.5rem;
-        }
-
-        .highlight {
-            color: var(--accent-color);
-            font-weight: bold;
-            font-size: 1.4em;
-        }
-
-        /* Reasons Section */
-        .reasons {
+        .feature-grid {
+            max-width: 1000px;
+            margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2rem;
-            margin-top: 3rem;
         }
 
-        .reason-card {
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+        .feature-box {
+            background: white;
             padding: 2rem;
-            border-radius: 15px;
+            border-top: 3px solid var(--accent-burgundy);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .feature-box.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .feature-box:hover {
+            box-shadow: 0 10px 30px rgba(139, 64, 73, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .feature-box h3 {
+            font-size: 1.3rem;
+            color: var(--accent-burgundy);
+            margin-bottom: 1rem;
+            font-weight: normal;
+            letter-spacing: 0.05em;
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        /* Interactive Reveal Button */
+        .reveal-section {
+            background: white;
+            padding: 4rem 2rem;
             text-align: center;
-            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            z-index: 2;
+        }
+
+        .reveal-box {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 3rem;
+            border: 2px dashed var(--accent-gold);
+            border-radius: 15px;
+            background: var(--magazine-cream);
+        }
+
+        .reveal-question {
+            font-size: 1.5rem;
+            color: var(--accent-burgundy);
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+
+        .reveal-button {
+            background: var(--accent-burgundy);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-family: 'Georgia', serif;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .reveal-button:hover {
+            background: var(--magazine-dark);
+            transform: scale(1.05);
+        }
+
+        .reveal-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.8s ease;
+            margin-top: 2rem;
+        }
+
+        .reveal-content.active {
+            max-height: 1000px;
+        }
+
+        .reveal-content p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        /* Final Statement Box */
+        .final-statement {
+            background: var(--magazine-dark);
+            color: var(--magazine-cream);
+            padding: 4rem 2rem;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .final-statement h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--accent-gold);
+            font-weight: normal;
+        }
+
+        .final-statement p {
+            max-width: 700px;
+            margin: 0 auto 1.5rem;
+            font-size: 1.2rem;
+            line-height: 1.8;
+        }
+
+        /* Signature */
+        .signature-box {
+            max-width: 800px;
+            margin: 4rem auto;
+            padding: 3rem;
+            text-align: center;
+            border: 2px solid var(--accent-gold);
+            background: white;
+            position: relative;
+            z-index: 2;
+        }
+
+        .signature-text {
+            font-size: 1.3rem;
+            font-style: italic;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .signature-name {
+            font-size: 1.5rem;
+            color: var(--accent-burgundy);
+            font-weight: normal;
+            letter-spacing: 0.1em;
+        }
+
+        /* Question Section */
+        .question-section {
+            background: white;
+            padding: 4rem 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .question-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .question-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--magazine-dark);
+            margin-bottom: 1rem;
+        }
+
+        .question-subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+            font-style: italic;
+        }
+
+        .question-card {
+            background: var(--magazine-cream);
+            margin-bottom: 1.5rem;
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
             border: 2px solid transparent;
         }
 
-        .reason-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
-            border-color: var(--primary-color);
+        .question-card:hover {
+            border-color: var(--accent-burgundy);
+            box-shadow: 0 5px 20px rgba(139, 64, 73, 0.2);
         }
 
-        .reason-icon {
+        .question-header {
+            padding: 1.5rem 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: white;
+        }
+
+        .question-icon {
+            font-size: 2rem;
+        }
+
+        .question-header h3 {
+            flex: 1;
+            font-size: 1.3rem;
+            color: var(--accent-burgundy);
+            font-weight: normal;
+        }
+
+        .toggle-icon {
+            font-size: 2rem;
+            color: var(--accent-gold);
+            transition: transform 0.3s ease;
+        }
+
+        .question-card.active .toggle-icon {
+            transform: rotate(45deg);
+        }
+
+        .answer-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.5s ease;
+            padding: 0 2rem;
+        }
+
+        .question-card.active .answer-content {
+            max-height: 500px;
+            padding: 1.5rem 2rem 2rem;
+        }
+
+        .answer-content p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-primary);
+        }
+
+        /* Memory Section */
+        .memory-section {
+            background: var(--magazine-dark);
+            padding: 4rem 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .memory-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--accent-gold);
+            margin-bottom: 1rem;
+        }
+
+        .memory-subtitle {
+            text-align: center;
+            color: var(--magazine-cream);
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+            font-style: italic;
+        }
+
+        .memory-grid {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .memory-card {
+            height: 200px;
+            position: relative;
+            cursor: pointer;
+            perspective: 1000px;
+        }
+
+        .memory-front,
+        .memory-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            transition: transform 0.6s ease;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .memory-front {
+            background: white;
+            border: 2px solid var(--accent-gold);
+        }
+
+        .memory-back {
+            background: var(--accent-burgundy);
+            color: white;
+            transform: rotateY(180deg);
+        }
+
+        .memory-card:hover .memory-front {
+            transform: rotateY(180deg);
+        }
+
+        .memory-card:hover .memory-back {
+            transform: rotateY(0deg);
+        }
+
+        .memory-emoji {
             font-size: 3rem;
             margin-bottom: 1rem;
         }
 
-        .reason-card h3 {
-            color: var(--primary-color);
-            margin-bottom: 1rem;
+        .memory-front h3 {
+            font-size: 1.2rem;
+            color: var(--accent-burgundy);
+            font-weight: normal;
         }
 
-        /* Final Message */
-        .final-message {
-            background: linear-gradient(135deg, rgba(231, 76, 60, 0.1), rgba(255, 182, 193, 0.2));
-            padding: 3rem;
-            border-radius: 20px;
+        .memory-back p {
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        /* Decorative Elements */
+        .divider {
             text-align: center;
-            margin-top: 3rem;
-            border: 3px solid var(--accent-color);
-        }
-
-        .final-message h3 {
-            font-size: 2rem;
-            color: var(--accent-color);
-            margin-bottom: 1.5rem;
-        }
-
-        .final-message p {
-            font-size: 1.3rem;
-            line-height: 2;
-        }
-
-        /* Signature */
-        .signature {
-            text-align: center;
+            margin: 3rem 0;
+            color: var(--accent-gold);
             font-size: 1.5rem;
-            font-style: italic;
-            color: var(--light-text);
-            margin-top: 3rem;
-            padding: 2rem;
-        }
-
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .fade-in {
-            animation: fadeInUp 1s ease;
         }
 
         /* Responsive */
         @media (max-width: 768px) {
-            .hero h1 {
+            .article-title {
                 font-size: 2rem;
             }
 
-            .hero p {
-                font-size: 1.2rem;
-            }
-
-            section h2 {
-                font-size: 2rem;
-            }
-
-            .confession-text {
+            .article-subtitle {
                 font-size: 1.1rem;
+            }
+
+            .pull-quote {
+                font-size: 1.4rem;
+                padding: 1.5rem 1rem;
+            }
+
+            .drop-cap::first-letter {
+                font-size: 3.5rem;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-dot {
+                left: 20px;
+            }
+
+            .timeline-content {
+                width: calc(100% - 60px);
+                margin-left: 60px !important;
+            }
+
+            .timeline-item {
+                transform: translateX(0) !important;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Floating Hearts Background -->
-    <div class="floating-hearts">
-        <div class="floating-heart">❤️</div>
-        <div class="floating-heart">❤️</div>
-        <div class="floating-heart">❤️</div>
-        <div class="floating-heart">❤️</div>
-        <div class="floating-heart">❤️</div>
-        <div class="floating-heart">❤️</div>
+    <!-- Floating Hearts -->
+    <div class="floating-hearts-container" id="heartsContainer"></div>
+
+    <!-- Magazine Header -->
+    <header class="magazine-header">
+        <div class="magazine-title">Anonymous Confessions</div>
+        <h1 style="font-size: 2.5rem; margin: 1rem 0; font-weight: normal;">I Judged You Wrong, and I'm Sorry</h1>
+        <div class="magazine-subtitle">A letter from someone who learned to see beyond first impressions</div>
+    </header>
+
+    <!-- Main Article -->
+    <article class="hero-article">
+        <div class="article-header">
+            <div class="article-category">Personal Confession</div>
+            <h1 class="article-title">To the Girl with the Carefree Smile</h1>
+            <p class="article-subtitle">How you taught me that authenticity is the most beautiful thing of all</p>
+            <div class="article-meta">From Someone Who Sees You | January 2026</div>
+        </div>
+
+        <div class="article-content">
+            <p class="drop-cap">I judged you wrong, and I'm sorry. When I first saw you, I misread your confidence as something else entirely. I thought your boldness meant you were unapproachable, that your loudness was a wall I couldn't see past. I'm ashamed to admit I made assumptions about who you were before I ever really knew you. But I was so, so wrong.</p>
+
+            <p>Then we had a conversation. Just one. And everything I thought I knew shattered like glass. You were kind in ways I hadn't expected. You were approachable, funny, thoughtful. Even if you couldn't always find the right words to comfort, your heart was always in the right place. That conversation changed everything for me.</p>
+
+            <div class="divider">✦ ✦ ✦</div>
+
+            <p>There was a moment in the hallway. You talked to me, and I don't even remember what you said because all I could focus on was your smile. That carefree, genuine smile that lit up your entire face. The way you looked at me with such playfulness, such ease. It captivated me in a way I still can't fully explain. It was like watching someone who had never learned to pretend, someone who existed exactly as they were meant to be.</p>
+
+            <p>And then you did something I'll never forget. You noticed something about me, something I do, something I create. You were amazed, genuinely amazed, and it struck me how rare that kind of authentic enthusiasm is. You once noticed something about me, and it meant more than you knew. In that moment, I realized I wanted to be someone worthy of that amazement.</p>
+
+            <div class="pull-quote">
+                "Your smile is the kind that makes the world forget its pretenses, even if just for a moment."
+            </div>
+
+            <p>Now, whenever I see you, my heart aches. Not painfully, but with longing. A yearning to be closer, to understand you better, to exist in your orbit just a little bit more. But I can't even bear to look you in the eyes. It's too much. The weight of all these unspoken feelings becomes too heavy when I meet your gaze.</p>
+
+            <p>We've interacted, yes, but we've never been close. I rarely face you directly. I'm more comfortable here, in the margins, watching from a safe distance. It's where I've always been. The observer, the one who notices things others miss, the quiet soul who feels everything too deeply to say it out loud.</p>
+        </div>
+    </article>
+
+    <!-- Interactive Timeline -->
+    <section class="timeline-section">
+        <h2 class="timeline-title">Moments That Changed Everything</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <span class="timeline-emoji">👀</span>
+                    <h3>First Impressions</h3>
+                    <p>I saw you from afar and made assumptions. I thought I had you figured out before we ever spoke.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <span class="timeline-emoji">💬</span>
+                    <h3>The Conversation</h3>
+                    <p>One conversation shattered everything I thought I knew. Your kindness, your humor, your thoughtfulness appeared.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <span class="timeline-emoji">✨</span>
+                    <h3>The Hallway Moment</h3>
+                    <p>You talked to me with that carefree smile, and suddenly the world felt different. I was captivated.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <span class="timeline-emoji">🌟</span>
+                    <h3>You Noticed Me</h3>
+                    <p>You were amazed by something I created. That moment of genuine enthusiasm meant more than you'll ever know.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <span class="timeline-emoji">💭</span>
+                    <h3>Silent Observation</h3>
+                    <p>Now I watch from the margins, noticing everything, feeling everything, but never quite able to close the distance.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <span class="timeline-emoji">💌</span>
+                    <h3>This Confession</h3>
+                    <p>And now, this moment. Where I finally put words to everything I've been feeling, hoping you'll understand.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feature Section -->
+    <section class="feature-section">
+        <h2 class="feature-section-title">What Makes You Extraordinary</h2>
+        <div class="feature-grid">
+            <div class="feature-box">
+                <span class="feature-icon">✨</span>
+                <h3>Your Unapologetic Self</h3>
+                <p>You're unlike anyone I've ever known. The way you're unapologetically yourself in a world that constantly asks us to be something else. It's revolutionary. You do things your own way, unbothered by judgment, unbothered by the need to fit in. That's what first captivated me.</p>
+            </div>
+
+            <div class="feature-box">
+                <span class="feature-icon">🌟</span>
+                <h3>Your Beautiful Quirks</h3>
+                <p>Your quirks that others might find strange? I find them beautiful. The little things you do that make you different, that make you <em>you</em>. They're not flaws. They're what make you unforgettable. They're what make me wish I could be brave enough to be half as authentic as you are.</p>
+            </div>
+
+            <div class="feature-box">
+                <span class="feature-icon">😊</span>
+                <h3>That Smile</h3>
+                <p>I could never smile like you do. So genuinely, so freely, so carelessly perfect. Your smile isn't calculated or practiced. It just <em>is</em>. It's the kind of smile that makes the world forget its pretenses, even if just for a moment. I've tried to capture what makes it so special, but words fail me.</p>
+            </div>
+
+            <div class="feature-box">
+                <span class="feature-icon">💫</span>
+                <h3>Your Playful Heart</h3>
+                <p>There's something childlike about you, in the best possible way. Not immature, but playful. Free. Like you haven't let the world make you too serious, too guarded, too afraid to be yourself. That lightness you carry, I wish I knew how to bottle it.</p>
+            </div>
+
+            <div class="feature-box">
+                <span class="feature-icon">🎭</span>
+                <h3>The Real You</h3>
+                <p>In a world full of people performing, you simply exist. You're kind without trying, funny without forcing it, thoughtful in your own way. You're messy and weird and perfectly imperfect. And that's exactly why you're so captivating.</p>
+            </div>
+
+            <div class="feature-box">
+                <span class="feature-icon">🤫</span>
+                <h3>What You Don't Know</h3>
+                <p>I've done things hoping to see you smile, and you'll never know it was me. Small gestures, quiet moments, secret attempts to brighten your day from the shadows. Watching you light up, even without knowing I had any part in it, was always enough for me.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Reveal Section -->
+    <section class="reveal-section">
+        <div class="reveal-box">
+            <p class="reveal-question">Do you want to know what I wish I could tell you in person?</p>
+            <button class="reveal-button" onclick="revealMessage()">Click to Reveal</button>
+            <div class="reveal-content" id="revealContent">
+                <p style="color: var(--accent-burgundy); font-weight: bold; margin-top: 2rem;">I wish you would notice my presence.</p>
+                <p>Not in a desperate way, but in the way you notice a familiar song playing softly in the background. Just an awareness that I'm here, that I exist in your world too.</p>
+                <p>I'm an observer by nature. I'm the one who sits by the window, not to look out but to avoid being seen. I notice the small things. The way you tilt your head when you're thinking, the way your eyes light up when something genuinely amuses you, the way you exist in the world like it was made just for you.</p>
+                <p>I'm a tender soul in a world that often mistakes gentleness for weakness. And I've taken all that tenderness and directed it toward you, even though you may never realize it.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Question Section -->
+    <section class="question-section">
+        <div class="question-container">
+            <h2 class="question-title">Things I Wonder About You</h2>
+            <p class="question-subtitle">Click each question to reveal my thoughts</p>
+            
+            <div class="question-card" onclick="toggleAnswer(this)">
+                <div class="question-header">
+                    <span class="question-icon">💭</span>
+                    <h3>Do you know how rare you are?</h3>
+                    <span class="toggle-icon">+</span>
+                </div>
+                <div class="answer-content">
+                    <p>In a world where everyone is trying so hard to fit in, to be liked, to be accepted, you just... exist. Beautifully, messily, authentically. Do you know how rare that is? Most people spend their entire lives building walls and wearing masks. But you? You're just you, unapologetically and completely. I don't think you realize how much courage that takes, or how much it inspires people like me who are still learning to be brave.</p>
+                </div>
+            </div>
+
+            <div class="question-card" onclick="toggleAnswer(this)">
+                <div class="question-header">
+                    <span class="question-icon">🌙</span>
+                    <h3>What do you dream about?</h3>
+                    <span class="toggle-icon">+</span>
+                </div>
+                <div class="answer-content">
+                    <p>I wonder about this all the time. When you're alone with your thoughts, what fills your mind? What makes you excited to wake up in the morning? What are the dreams that keep you up at night? I wish I knew the stories you tell yourself, the worlds you imagine, the things you hope for. Maybe one day I'll be brave enough to ask. But for now, I can only wonder from this distance, imagining all the beautiful things that must exist in your mind.</p>
+                </div>
+            </div>
+
+            <div class="question-card" onclick="toggleAnswer(this)">
+                <div class="question-header">
+                    <span class="question-icon">✨</span>
+                    <h3>Do you feel the magic in ordinary moments?</h3>
+                    <span class="toggle-icon">+</span>
+                </div>
+                <div class="answer-content">
+                    <p>You have this way of making everything seem lighter, more interesting, more alive. A boring hallway becomes memorable because you walked through it. A regular day becomes special because you were there. I wonder if you feel it too, or if it's just me. Do you notice the way sunlight hits things at certain times? Do you appreciate the small, perfect moments that most people rush past? Something tells me you do. Something tells me that's part of what makes you so special.</p>
+                </div>
+            </div>
+
+            <div class="question-card" onclick="toggleAnswer(this)">
+                <div class="question-header">
+                    <span class="question-icon">💫</span>
+                    <h3>What would you do if you knew?</h3>
+                    <span class="toggle-icon">+</span>
+                </div>
+                <div class="answer-content">
+                    <p>If you knew it was me writing this, what would you do? Would you laugh? Would you be surprised? Would you feel uncomfortable, or maybe, just maybe, would you smile that carefree smile of yours? I think about this scenario in a hundred different ways. Sometimes I imagine you'd understand. Other times I worry you'd think I'm strange for feeling so much from such a distance. But mostly, I just hope you'd know that these feelings come from a place of genuine admiration and respect.</p>
+                </div>
+            </div>
+
+            <div class="question-card" onclick="toggleAnswer(this)">
+                <div class="question-header">
+                    <span class="question-icon">🎨</span>
+                    <h3>Do you know the impact you have?</h3>
+                    <span class="toggle-icon">+</span>
+                </div>
+                <div class="answer-content">
+                    <p>You changed me without even trying. You showed me that it's okay to be different, that authenticity is more valuable than perfection, that being yourself is the bravest thing anyone can do. You probably have no idea that you've taught me these things. You were just being you. But that's exactly the point. Just by existing as your genuine self, you've made someone else's world a little bit better. I wonder how many other people you've impacted without even knowing it.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Memory Gallery Section -->
+    <section class="memory-section">
+        <h2 class="memory-title">Moments I've Memorized</h2>
+        <p class="memory-subtitle">Hover over each memory to reveal the full story</p>
+        
+        <div class="memory-grid">
+            <div class="memory-card">
+                <div class="memory-front">
+                    <span class="memory-emoji">🌅</span>
+                    <h3>Morning Sunlight</h3>
+                </div>
+                <div class="memory-back">
+                    <p>The way the morning light caught your hair that one day in class. You were laughing at something, completely unaware of how radiant you looked. I couldn't concentrate on anything else for the rest of the day.</p>
+                </div>
+            </div>
+
+            <div class="memory-card">
+                <div class="memory-front">
+                    <span class="memory-emoji">📚</span>
+                    <h3>Your Focused Look</h3>
+                </div>
+                <div class="memory-back">
+                    <p>When you're concentrating on something, you bite your lower lip just slightly. It's such a small detail, but I've noticed it every single time. It's one of those quirks that makes you undeniably you.</p>
+                </div>
+            </div>
+
+            <div class="memory-card">
+                <div class="memory-front">
+                    <span class="memory-emoji">🎵</span>
+                    <h3>The Humming</h3>
+                </div>
+                <div class="memory-back">
+                    <p>Sometimes you hum softly to yourself when you think no one's listening. I've caught it a few times. It's always off-key and absolutely perfect. It makes me wonder what song is playing in your head.</p>
+                </div>
+            </div>
+
+            <div class="memory-card">
+                <div class="memory-front">
+                    <span class="memory-emoji">💬</span>
+                    <h3>Your Laugh</h3>
+                </div>
+                <div class="memory-back">
+                    <p>Not the polite laugh you give to be nice, but the real one. The one that comes out when something genuinely amuses you. It's loud and unfiltered and completely contagious. I live for those moments.</p>
+                </div>
+            </div>
+
+            <div class="memory-card">
+                <div class="memory-front">
+                    <span class="memory-emoji">🌧️</span>
+                    <h3>Rain Day</h3>
+                </div>
+                <div class="memory-back">
+                    <p>That time it started raining and instead of running for cover like everyone else, you just stood there for a moment with your face turned up to the sky, smiling. Most people would think that's weird. I thought it was beautiful.</p>
+                </div>
+            </div>
+
+            <div class="memory-card">
+                <div class="memory-front">
+                    <span class="memory-emoji">🎭</span>
+                    <h3>Your Expressions</h3>
+                </div>
+                <div class="memory-back">
+                    <p>Your face is so expressive. You don't hide what you're feeling, and I love that about you. When something confuses you, your eyebrows scrunch up. When you're happy, your whole face lights up. You're an open book in the best way.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Continued Story -->
+    <article class="hero-article">
+        <div class="article-content">
+            <h2 style="text-align: center; color: var(--accent-burgundy); margin-bottom: 2rem;">The Distance Between Admiration and Love</h2>
+            
+            <p>I've thought a lot about what this feeling is. Is it love? Is it just admiration? Is it infatuation? I don't have a clear answer, and maybe I don't need one. All I know is that you've made me feel things I didn't know I was capable of feeling.</p>
+
+            <p>You've made me want to be braver. Every time I see you being unapologetically yourself, it makes me question why I'm so afraid to do the same. You've made me want to speak up more, to stop hiding in the margins, to take up space in the world instead of just observing it.</p>
+
+            <p>But here's the contradiction: even as you inspire me to be braver, I'm still too afraid to tell you any of this face to face. I can write it here, in this anonymous space, but the thought of looking you in the eyes and saying these words makes my heart race with fear.</p>
+
+            <div class="divider">✦ ✦ ✦</div>
+
+            <p>Maybe that's why I'm writing this. Maybe this is my small act of bravery. It's not much. It's not telling you directly. But it's something. It's me acknowledging these feelings, giving them words, letting them exist outside of just my own head.</p>
+
+            <p>And maybe, just maybe, if you're reading this and you recognize yourself in these words, you'll understand. You'll know that someone out there thinks you're extraordinary. That someone sees all the little things that make you you, and finds them beautiful.</p>
+
+            <div class="pull-quote">
+                "Perhaps the bravest thing I've ever done is allow myself to feel this deeply, knowing you may never feel the same."
+            </div>
+
+            <h2 style="text-align: center; color: var(--accent-burgundy); margin-bottom: 2rem; margin-top: 4rem;">What I've Learned From You</h2>
+
+            <p>You've taught me that authenticity is magnetic. I used to think I needed to be more outgoing, more confident, more like everyone else. But watching you be so completely yourself has shown me that there's power in authenticity, whatever form that takes.</p>
+
+            <p>You've taught me that kindness doesn't have to look a certain way. You might not always have the perfect words to comfort someone, but your heart is always in the right place, and that matters more than any eloquent speech.</p>
+
+            <p>You've taught me that it's okay to be playful, to not take everything so seriously, to find joy in small moments. I tend to overthink everything, to be too serious, too careful. You remind me that life is also meant to be enjoyed.</p>
+
+            <p>Most importantly, you've taught me that first impressions can be completely wrong. I judged you harshly at first, and I was so mistaken. It's made me more careful about making assumptions about others. It's made me want to give people the benefit of the doubt, to look beyond the surface.</p>
+
+            <div class="divider">✦ ✦ ✦</div>
+
+            <h2 style="text-align: center; color: var(--accent-burgundy); margin-bottom: 2rem;">The Truth I Need You to Know</h2>
+            
+            <p>This isn't a plea. I'm not asking you to return these feelings or even acknowledge them. I don't expect anything from you. Not a response, not reciprocation, not even recognition. This is simply the truth seeking air, a confession that needed to exist outside of my own heart.</p>
+
+            <p>I just wanted you to know what I feel. I wanted you to know that somewhere out there, someone sees you. Really sees you. And thinks you're extraordinary. Someone appreciates the way you refuse to dim your light for anyone. Someone is grateful that you exist exactly as you are.</p>
+
+            <p>If these feelings make you uncomfortable, I'm sorry. That was never my intention. If you figure out who wrote this and it changes things between us, even the small interactions we have now, I'll understand. I'll step back further into the margins where I belong.</p>
+
+            <p>But if there's even a small part of you that's touched by this, that feels seen and appreciated, then it was worth the risk of writing it all down.</p>
+        </div>
+    </article>
+
+    <!-- Final Statement -->
+    <section class="final-statement">
+        <h2>What I Hope You Take From This</h2>
+        <p>If you're reading this and wondering who wrote it, know that it doesn't really matter. What matters is this: you are seen. You are appreciated. Your authenticity, your weirdness, your carefree smile, your playful heart. All of it is noticed and cherished.</p>
+        <p>You taught me that first impressions can be devastatingly wrong. You taught me that the people we judge most quickly are often the ones who will change us most profoundly.</p>
+        <p>Keep being unapologetically yourself. Keep dancing to your own rhythm. Keep smiling that smile that makes the world a little brighter. Don't ever let anyone convince you to be smaller, quieter, or more palatable.</p>
+        <p style="color: var(--accent-gold); font-size: 1.4rem; margin-top: 2rem;">You are exactly who you're meant to be, and that is more than enough.</p>
+    </section>
+
+    <!-- Signature -->
+    <div class="signature-box">
+        <p style="font-size: 1.5rem; color: var(--accent-burgundy); margin-bottom: 2rem; font-style: italic;">
+            "In the garden of my heart, you bloom wild and untamed. A flower that refuses to be anything but itself."
+        </p>
+        <p class="signature-text">From the hallways where I watch you pass,</p>
+        <p class="signature-text">From the margins where I exist,</p>
+        <p class="signature-text">From someone who judged you wrong and learned better,</p>
+        <p class="signature-name">Someone Who Sees You</p>
+        <p style="margin-top: 2rem; font-size: 0.9rem; color: #999; font-style: italic;">
+            "Perhaps loving someone doesn't always mean standing beside them. Sometimes it means standing back and marveling at who they are from afar."
+        </p>
     </div>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-heart">❤️</div>
-        <h1>To Someone Extraordinary</h1>
-        <p>"In the quiet spaces between words, there exists an admiration..."</p>
-    </section>
-
-    <!-- Main Confession -->
-    <section class="fade-in">
-        <h2>A Confession Written in Starlight</h2>
-        <div class="confession-text">
-            <p>In the quiet spaces between words, in the gentle moments that pass like whispers, there exists an admiration that has grown roots in my heart.</p>
-            
-            <p>You move through the world like poetry in motion—each gesture a verse, each smile a stanza that rewrites the rhythm of ordinary days. There is a grace in your existence that makes the mundane feel magical.</p>
-            
-            <p>I am but a shadow in your story, an observer enchanted by the way sunlight catches in your laughter, by the thoughtfulness that colors your every word.</p>
-        </div>
-    </section>
-
-    <!-- Reasons Section -->
-    <section>
-        <h2>What Makes You Special</h2>
-        <div class="reasons">
-            <div class="reason-card">
-                <div class="reason-icon">✨</div>
-                <h3>Your Smile</h3>
-                <p>It lights up every room and makes even the gloomiest days feel brighter.</p>
-            </div>
-            <div class="reason-card">
-                <div class="reason-icon">🌟</div>
-                <h3>Your Kindness</h3>
-                <p>The way you treat others with compassion and genuine care is truly beautiful.</p>
-            </div>
-            <div class="reason-card">
-                <div class="reason-icon">💫</div>
-                <h3>Your Presence</h3>
-                <p>Everything feels different when you're around—more alive, more meaningful.</p>
-            </div>
-            <div class="reason-card">
-                <div class="reason-icon">🎨</div>
-                <h3>Your Uniqueness</h3>
-                <p>The way you see the world, your thoughts, your dreams—all uniquely, wonderfully you.</p>
-            </div>
-            <div class="reason-card">
-                <div class="reason-icon">🌸</div>
-                <h3>Your Strength</h3>
-                <p>The grace with which you handle life's challenges inspires those around you.</p>
-            </div>
-            <div class="reason-card">
-                <div class="reason-icon">💝</div>
-                <h3>Simply You</h3>
-                <p>Every little thing about you, from your laugh to your quirks, is remarkable.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- The Truth -->
-    <section>
-        <div class="confession-text">
-            <p>You have taught me what it means to admire someone—not from closeness, but from a distance where reverence resides.</p>
-            
-            <p class="highlight">I wanted you to know that you are seen, cherished, and celebrated.</p>
-            
-            <p>This is not a plea, nor an expectation. It is simply the truth seeking air—a confession written in starlight, carried on the wind.</p>
-        </div>
-    </section>
-
-    <!-- Final Message -->
-    <section>
-        <div class="final-message">
-            <h3>May You Always Know</h3>
-            <p>The quiet beauty you bring to this world, and to those who are lucky enough to notice.</p>
-            <p style="margin-top: 1.5rem;">You deserve all the happiness, love, and wonderful things this life has to offer.</p>
-        </div>
-
-        <div class="signature">
-            From someone who sees you,<br>
-            <span style="font-size: 1.2rem; margin-top: 0.5rem; display: inline-block;">A silent admirer ✨</span>
-        </div>
-    </section>
-
-    <!-- JavaScript for scroll animations -->
     <script>
-        // Intersection Observer for fade-in animations
+        // Floating hearts animation
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'floating-heart';
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDuration = (Math.random() * 3 + 5) + 's';
+            heart.style.animationDelay = Math.random() * 2 + 's';
+            document.getElementById('heartsContainer').appendChild(heart);
+            
+            setTimeout(() => heart.remove(), 8000);
+        }
+
+        setInterval(createHeart, 2000);
+
+        // Scroll reveal animations
         const observerOptions = {
-            threshold: 0.2,
-            rootMargin: '0px 0px -100px 0px'
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
         };
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.style.opacity = '0';
-                    entry.target.style.animation = 'fadeInUp 1s ease forwards';
+                    entry.target.classList.add('visible');
                 }
             });
         }, observerOptions);
 
-        // Observe all sections and cards
-        document.querySelectorAll('section, .reason-card').forEach(el => {
+        // Observe all animated elements
+        document.querySelectorAll('.article-content p, .pull-quote, .timeline-item, .feature-box').forEach(el => {
             observer.observe(el);
         });
 
-        // Add gentle parallax effect to floating hearts
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const hearts = document.querySelectorAll('.floating-heart');
-            hearts.forEach((heart, index) => {
-                const speed = 0.1 + (index * 0.05);
-                heart.style.transform = `translateY(${scrolled * speed}px)`;
+        // Reveal button functionality
+        function revealMessage() {
+            const content = document.getElementById('revealContent');
+            const button = event.target;
+            
+            if (content.classList.contains('active')) {
+                content.classList.remove('active');
+                button.textContent = 'Click to Reveal';
+            } else {
+                content.classList.add('active');
+                button.textContent = 'Hide Message';
+            }
+        }
+
+        // Toggle question answers
+        function toggleAnswer(card) {
+            card.classList.toggle('active');
+        }
+
+        // Smooth scroll for better experience
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
             });
         });
     </script>
