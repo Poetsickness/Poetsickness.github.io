@@ -3,10 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Website</title>
+    <title>For Someone Special</title>
     <style>
-        /* === COLORS === */
-        /* Change these to customize your color scheme */
         :root {
             --primary-color: #667eea;
             --secondary-color: #764ba2;
@@ -15,7 +13,6 @@
             --accent-color: #e74c3c;
         }
 
-        /* === BASIC SETUP === */
         * {
             margin: 0;
             padding: 0;
@@ -23,47 +20,81 @@
         }
 
         body {
-            font-family: 'Arial', sans-serif;
-            line-height: 1.6;
+            font-family: 'Georgia', serif;
+            line-height: 1.8;
             color: var(--text-color);
+            overflow-x: hidden;
         }
 
-        /* === NAVIGATION BAR === */
-        nav {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            padding: 1rem 2rem;
+        /* Floating hearts background */
+        .floating-hearts {
             position: fixed;
             width: 100%;
+            height: 100%;
             top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            left: 0;
+            pointer-events: none;
+            z-index: 0;
         }
 
-        nav ul {
-            list-style: none;
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
+        .floating-heart {
+            position: absolute;
+            color: rgba(231, 76, 60, 0.2);
+            font-size: 30px;
+            animation: float 15s infinite;
         }
 
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-            transition: opacity 0.3s;
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
         }
 
-        nav a:hover {
-            opacity: 0.7;
-        }
+        .floating-heart:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .floating-heart:nth-child(2) { left: 25%; animation-delay: 3s; }
+        .floating-heart:nth-child(3) { left: 40%; animation-delay: 6s; }
+        .floating-heart:nth-child(4) { left: 55%; animation-delay: 2s; }
+        .floating-heart:nth-child(5) { left: 70%; animation-delay: 5s; }
+        .floating-heart:nth-child(6) { left: 85%; animation-delay: 8s; }
 
-        /* === HERO SECTION === */
+        /* Hero Section */
         .hero {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
             text-align: center;
-            padding: 150px 20px 100px;
-            margin-top: 60px;
+            padding: 120px 20px 80px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-heart {
+            font-size: 80px;
+            animation: heartbeat 1.5s ease-in-out infinite;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            25% {
+                transform: scale(1.1);
+            }
+            50% {
+                transform: scale(1);
+            }
         }
 
         .hero h1 {
@@ -73,158 +104,111 @@
         }
 
         .hero p {
-            font-size: 1.3rem;
+            font-size: 1.5rem;
             margin-bottom: 2rem;
             animation: fadeInUp 1.2s ease;
+            font-style: italic;
         }
 
-        .btn {
-            display: inline-block;
-            padding: 12px 30px;
-            background: white;
-            color: var(--primary-color);
-            text-decoration: none;
-            border-radius: 25px;
-            font-weight: bold;
-            transition: transform 0.3s;
-            animation: fadeInUp 1.4s ease;
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-        }
-
-        /* === SECTIONS === */
+        /* Content Sections */
         section {
             padding: 80px 20px;
-            max-width: 1200px;
+            max-width: 900px;
             margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            background: white;
         }
 
         section h2 {
             text-align: center;
             font-size: 2.5rem;
-            margin-bottom: 3rem;
-            color: var(--text-color);
+            margin-bottom: 2rem;
+            color: var(--primary-color);
         }
 
-        /* === ABOUT SECTION === */
-        .about-content {
-            display: flex;
-            gap: 3rem;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .about-text {
-            flex: 1;
-            min-width: 300px;
-        }
-
-        .about-image {
-            flex: 1;
-            min-width: 300px;
+        .confession-text {
+            font-size: 1.2rem;
+            line-height: 2;
             text-align: center;
+            margin-bottom: 2rem;
         }
 
-        .about-image img {
-            max-width: 100%;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        .confession-text p {
+            margin-bottom: 1.5rem;
         }
 
-        /* === FEATURES/CARDS SECTION === */
-        .cards {
+        .highlight {
+            color: var(--accent-color);
+            font-weight: bold;
+            font-size: 1.4em;
+        }
+
+        /* Reasons Section */
+        .reasons {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 2rem;
+            margin-top: 3rem;
         }
 
-        .card {
-            background: white;
+        .reason-card {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
             padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
+            border-radius: 15px;
             text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 2px solid transparent;
         }
 
-        .card:hover {
+        .reason-card:hover {
             transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            border-color: var(--primary-color);
         }
 
-        .card-icon {
+        .reason-icon {
             font-size: 3rem;
             margin-bottom: 1rem;
         }
 
-        .card h3 {
-            margin-bottom: 1rem;
+        .reason-card h3 {
             color: var(--primary-color);
+            margin-bottom: 1rem;
         }
 
-        /* === CONTACT SECTION === */
-        .contact-form {
-            max-width: 600px;
-            margin: 0 auto;
+        /* Final Message */
+        .final-message {
+            background: linear-gradient(135deg, rgba(231, 76, 60, 0.1), rgba(255, 182, 193, 0.2));
+            padding: 3rem;
+            border-radius: 20px;
+            text-align: center;
+            margin-top: 3rem;
+            border: 3px solid var(--accent-color);
         }
 
-        .form-group {
+        .final-message h3 {
+            font-size: 2rem;
+            color: var(--accent-color);
             margin-bottom: 1.5rem;
         }
 
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: bold;
+        .final-message p {
+            font-size: 1.3rem;
+            line-height: 2;
         }
 
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 5px;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--primary-color);
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 150px;
-        }
-
-        .submit-btn {
-            background: var(--primary-color);
-            color: white;
-            padding: 12px 40px;
-            border: none;
-            border-radius: 25px;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .submit-btn:hover {
-            background: var(--secondary-color);
-        }
-
-        /* === FOOTER === */
-        footer {
-            background: var(--text-color);
-            color: white;
+        /* Signature */
+        .signature {
             text-align: center;
+            font-size: 1.5rem;
+            font-style: italic;
+            color: var(--light-text);
+            margin-top: 3rem;
             padding: 2rem;
         }
 
-        /* === ANIMATIONS === */
+        /* Animations */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -236,151 +220,152 @@
             }
         }
 
-        /* === RESPONSIVE === */
-        @media (max-width: 768px) {
-            nav ul {
-                flex-direction: column;
-                gap: 1rem;
-            }
+        .fade-in {
+            animation: fadeInUp 1s ease;
+        }
 
+        /* Responsive */
+        @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
             }
 
             section h2 {
                 font-size: 2rem;
             }
+
+            .confession-text {
+                font-size: 1.1rem;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- NAVIGATION BAR -->
-    <nav>
-        <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#features">Features</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-    </nav>
+    <!-- Floating Hearts Background -->
+    <div class="floating-hearts">
+        <div class="floating-heart">❤️</div>
+        <div class="floating-heart">❤️</div>
+        <div class="floating-heart">❤️</div>
+        <div class="floating-heart">❤️</div>
+        <div class="floating-heart">❤️</div>
+        <div class="floating-heart">❤️</div>
+    </div>
 
-    <!-- HERO SECTION -->
-    <section id="home" class="hero">
-        <h1>Welcome to My Website</h1>
-        <p>This is where your journey begins</p>
-        <a href="#about" class="btn">Learn More</a>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-heart">❤️</div>
+        <h1>To Someone Extraordinary</h1>
+        <p>"In the quiet spaces between words, there exists an admiration..."</p>
     </section>
 
-    <!-- ABOUT SECTION -->
-    <section id="about">
-        <h2>About Me</h2>
-        <div class="about-content">
-            <div class="about-text">
-                <p>Hello! I'm passionate about creating amazing experiences. This website showcases my work, thoughts, and creativity.</p>
-                <p style="margin-top: 1rem;">Feel free to explore and get to know more about what I do and what drives me.</p>
+    <!-- Main Confession -->
+    <section class="fade-in">
+        <h2>A Confession Written in Starlight</h2>
+        <div class="confession-text">
+            <p>In the quiet spaces between words, in the gentle moments that pass like whispers, there exists an admiration that has grown roots in my heart.</p>
+            
+            <p>You move through the world like poetry in motion—each gesture a verse, each smile a stanza that rewrites the rhythm of ordinary days. There is a grace in your existence that makes the mundane feel magical.</p>
+            
+            <p>I am but a shadow in your story, an observer enchanted by the way sunlight catches in your laughter, by the thoughtfulness that colors your every word.</p>
+        </div>
+    </section>
+
+    <!-- Reasons Section -->
+    <section>
+        <h2>What Makes You Special</h2>
+        <div class="reasons">
+            <div class="reason-card">
+                <div class="reason-icon">✨</div>
+                <h3>Your Smile</h3>
+                <p>It lights up every room and makes even the gloomiest days feel brighter.</p>
             </div>
-            <div class="about-image">
-                <!-- Replace with your image URL -->
-                <div style="width: 300px; height: 300px; background: #ddd; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin: 0 auto;">
-                    Your Image Here
-                </div>
+            <div class="reason-card">
+                <div class="reason-icon">🌟</div>
+                <h3>Your Kindness</h3>
+                <p>The way you treat others with compassion and genuine care is truly beautiful.</p>
+            </div>
+            <div class="reason-card">
+                <div class="reason-icon">💫</div>
+                <h3>Your Presence</h3>
+                <p>Everything feels different when you're around—more alive, more meaningful.</p>
+            </div>
+            <div class="reason-card">
+                <div class="reason-icon">🎨</div>
+                <h3>Your Uniqueness</h3>
+                <p>The way you see the world, your thoughts, your dreams—all uniquely, wonderfully you.</p>
+            </div>
+            <div class="reason-card">
+                <div class="reason-icon">🌸</div>
+                <h3>Your Strength</h3>
+                <p>The grace with which you handle life's challenges inspires those around you.</p>
+            </div>
+            <div class="reason-card">
+                <div class="reason-icon">💝</div>
+                <h3>Simply You</h3>
+                <p>Every little thing about you, from your laugh to your quirks, is remarkable.</p>
             </div>
         </div>
     </section>
 
-    <!-- FEATURES SECTION -->
-    <section id="features">
-        <h2>What I Offer</h2>
-        <div class="cards">
-            <div class="card">
-                <div class="card-icon">🎨</div>
-                <h3>Creative Design</h3>
-                <p>Beautiful and functional designs that capture attention and deliver results.</p>
-            </div>
-            <div class="card">
-                <div class="card-icon">💻</div>
-                <h3>Development</h3>
-                <p>Clean, efficient code that brings ideas to life with modern technologies.</p>
-            </div>
-            <div class="card">
-                <div class="card-icon">🚀</div>
-                <h3>Innovation</h3>
-                <p>Always pushing boundaries and exploring new possibilities in every project.</p>
-            </div>
+    <!-- The Truth -->
+    <section>
+        <div class="confession-text">
+            <p>You have taught me what it means to admire someone—not from closeness, but from a distance where reverence resides.</p>
+            
+            <p class="highlight">I wanted you to know that you are seen, cherished, and celebrated.</p>
+            
+            <p>This is not a plea, nor an expectation. It is simply the truth seeking air—a confession written in starlight, carried on the wind.</p>
         </div>
     </section>
 
-    <!-- CONTACT SECTION -->
-    <section id="contact">
-        <h2>Get In Touch</h2>
-        <form class="contact-form" id="contactForm">
-            <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" id="name" name="name" required>
-            </div>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-            <div class="form-group">
-                <label for="message">Message</label>
-                <textarea id="message" name="message" required></textarea>
-            </div>
-            <button type="submit" class="submit-btn">Send Message</button>
-        </form>
+    <!-- Final Message -->
+    <section>
+        <div class="final-message">
+            <h3>May You Always Know</h3>
+            <p>The quiet beauty you bring to this world, and to those who are lucky enough to notice.</p>
+            <p style="margin-top: 1.5rem;">You deserve all the happiness, love, and wonderful things this life has to offer.</p>
+        </div>
+
+        <div class="signature">
+            From someone who sees you,<br>
+            <span style="font-size: 1.2rem; margin-top: 0.5rem; display: inline-block;">A silent admirer ✨</span>
+        </div>
     </section>
 
-    <!-- FOOTER -->
-    <footer>
-        <p>&copy; 2026 My Website. All rights reserved.</p>
-    </footer>
-
-    <!-- JAVASCRIPT -->
+    <!-- JavaScript for scroll animations -->
     <script>
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.2,
+            rootMargin: '0px 0px -100px 0px'
+        };
 
-        // Form submission handler
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get form values
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const message = document.getElementById('message').value;
-            
-            // Show success message
-            alert(`Thank you, ${name}! Your message has been received.`);
-            
-            // Reset form
-            this.reset();
-            
-            // Here you would typically send the data to a server
-            console.log('Form submitted:', { name, email, message });
-        });
-
-        // Add scroll animation to sections
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.style.animation = 'fadeInUp 1s ease';
+                    entry.target.style.opacity = '0';
+                    entry.target.style.animation = 'fadeInUp 1s ease forwards';
                 }
             });
+        }, observerOptions);
+
+        // Observe all sections and cards
+        document.querySelectorAll('section, .reason-card').forEach(el => {
+            observer.observe(el);
         });
 
-        document.querySelectorAll('section').forEach(section => {
-            observer.observe(section);
+        // Add gentle parallax effect to floating hearts
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hearts = document.querySelectorAll('.floating-heart');
+            hearts.forEach((heart, index) => {
+                const speed = 0.1 + (index * 0.05);
+                heart.style.transform = `translateY(${scrolled * speed}px)`;
+            });
         });
     </script>
 </body>
