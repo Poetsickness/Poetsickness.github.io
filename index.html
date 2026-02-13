@@ -641,6 +641,43 @@
             transform: scale(1.5);
         }
 
+        /* Music Toggle Button */
+        .music-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #8B7355 0%, #A0826D 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(139, 115, 85, 0.4);
+            transition: all 0.3s ease;
+            border: 3px solid white;
+        }
+
+        .music-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(139, 115, 85, 0.6);
+        }
+
+        .music-toggle.playing {
+            animation: musicPulse 1s ease-in-out infinite;
+        }
+
+        @keyframes musicPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .music-icon {
+            font-size: 24px;
+        }
+
         .divider {
             width: 100%;
             height: 3px;
@@ -688,6 +725,49 @@
     <div class="music-notes" id="musicNotes"></div>
     
     <div class="progress-dots" id="progressDots"></div>
+
+    <!-- Music Toggle Button -->
+    <div class="music-toggle" id="musicToggle" onclick="toggleMusic()" title="Toggle Background Music">
+        <span class="music-icon" id="musicIcon">🔇</span>
+    </div>
+    
+    <!-- Show Lyrics Button (appears when music is playing) -->
+    <div id="lyricsButton" style="display: none; position: fixed; top: 80px; right: 20px; padding: 12px 20px; background: linear-gradient(135deg, #8B7355 0%, #A0826D 100%); color: white; border-radius: 25px; cursor: pointer; z-index: 1000; box-shadow: 0 4px 15px rgba(139, 115, 85, 0.4); font-family: Georgia, serif; border: 3px solid white;" onclick="toggleLyrics()">
+        Show Lyrics 📜
+    </div>
+
+    <!-- Lyrics Display -->
+    <div id="lyricsDisplay" style="display: none; position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); background: rgba(139, 115, 85, 0.95); color: white; padding: 20px 30px; border-radius: 15px; max-width: 500px; text-align: center; z-index: 999; box-shadow: 0 10px 30px rgba(0,0,0,0.4); border: 2px solid white;">
+        <p style="font-size: 1.1em; line-height: 1.8; margin: 0; font-style: italic;">
+            "Fly me to the moon<br>
+            Let me play among the stars<br>
+            Let me see what spring is like<br>
+            On Jupiter and Mars<br>
+            In other words, hold my hand<br>
+            In other words, baby, kiss me"
+        </p>
+        <p style="margin-top: 15px; font-size: 0.9em; opacity: 0.8;">- Frank Sinatra</p>
+    </div>
+
+    <!-- Background Music Audio -->
+    <audio id="bgMusic" loop>
+        <!-- Note: Replace this URL with actual "Fly Me to the Moon" instrumental if available -->
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Lyrics Display -->
+    <div id="lyricsBox" style="display: none; position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); background: rgba(255, 248, 240, 0.95); padding: 25px 35px; border-radius: 15px; border: 3px solid #8B7355; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); max-width: 500px; z-index: 999; text-align: center;">
+        <h3 style="color: #8B7355; margin-bottom: 15px; font-size: 1.3em; font-family: Georgia, serif;">🎵 Fly Me to the Moon 🎵</h3>
+        <div style="color: #555; font-size: 1.05em; line-height: 1.8; font-style: italic; font-family: Georgia, serif;">
+            <p style="margin-bottom: 12px;">Fly me to the moon<br>Let me play among the stars</p>
+            <p style="margin-bottom: 12px;">Let me see what spring is like<br>On Jupiter and Mars</p>
+            <p style="margin-bottom: 12px;">In other words, hold my hand<br>In other words, baby, kiss me</p>
+            <p style="margin-bottom: 12px;">Fill my heart with song<br>And let me sing forevermore</p>
+            <p style="margin-bottom: 12px;">You are all I long for<br>All I worship and adore</p>
+            <p style="margin-bottom: 0; font-weight: bold; color: #8B7355;">In other words, please be true<br>In other words, I love you</p>
+        </div>
+        <button onclick="toggleLyrics()" style="margin-top: 20px; padding: 10px 25px; background: #8B7355; color: white; border: none; border-radius: 25px; cursor: pointer; font-family: Georgia, serif; font-size: 1em;">Close 💙</button>
+    </div>
 
     <!-- Cute Panda Doodle -->
     <svg class="panda-doodle" viewBox="0 0 100 100">
@@ -1333,16 +1413,17 @@
         let currentSection = 1;
         const totalSections = 7;
         let noClickCount = 0;
+        let isMusicPlaying = false;
 
         const pleaMessages = [
             "Sigurado ka ba? Please think about it... 🥺",
             "Okay wait, baka hindi mo pa naintindihan. I really like you. Try again? 💙",
-            "Come on, give me a chance please? I promise I'll make you happy. 🙏",
+            "Come on, give me a chance please? I promise I will make you happy. 🙏",
             "Ang hirap naman nito! Just one date, please? 😢",
-            "Seryoso ba? Okay fine, I'll ask one more time. Please? 🥹",
+            "Seryoso ba? Okay fine, I will ask one more time. Please? 🥹",
             "Ayoko na mag give up! Will you reconsider? Pretty please? 💕",
             "Last na to, I promise! Be my Valentine please? 🙏💙",
-            "Okay sige na please. I'll be the best courter ever! 😭",
+            "Okay sige na please. I will be the best courter ever! 😭",
             "Hindi ka pa ba naawa? Sige na please, one chance lang! 🥺💕"
         ];
 
@@ -1350,6 +1431,40 @@
             initProgressDots();
             createFloatingNotes();
         });
+
+        function toggleMusic() {
+            const bgMusic = document.getElementById('bgMusic');
+            const musicIcon = document.getElementById('musicIcon');
+            const musicToggle = document.getElementById('musicToggle');
+            const lyricsButton = document.getElementById('lyricsButton');
+            
+            if (isMusicPlaying) {
+                bgMusic.pause();
+                musicIcon.textContent = '🔇';
+                musicToggle.classList.remove('playing');
+                lyricsButton.style.display = 'none';
+                isMusicPlaying = false;
+            } else {
+                bgMusic.play().then(function() {
+                    musicIcon.textContent = '🎵';
+                    musicToggle.classList.add('playing');
+                    lyricsButton.style.display = 'block';
+                    isMusicPlaying = true;
+                }).catch(function(error) {
+                    console.log('Music play failed:', error);
+                    alert('Click the music button to play. Some browsers require user interaction first.');
+                });
+            }
+        }
+
+        function toggleLyrics() {
+            const lyricsBox = document.getElementById('lyricsBox');
+            if (lyricsBox.style.display === 'none' || lyricsBox.style.display === '') {
+                lyricsBox.style.display = 'block';
+            } else {
+                lyricsBox.style.display = 'none';
+            }
+        }
 
         function initProgressDots() {
             const dotsContainer = document.getElementById('progressDots');
