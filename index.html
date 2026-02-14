@@ -1985,7 +1985,7 @@
         window.addEventListener('load', function() {
             initProgressDots();
             createFloatingNotes();
-            
+        });
 
         function initProgressDots() {
             const dotsContainer = document.getElementById('progressDots');
@@ -1998,24 +1998,42 @@
         }
 
         function nextSection(sectionNum) {
-            document.getElementById('section' + currentSection).classList.remove('visible');
+            // Hide current section
+            const currentSectionEl = document.getElementById('section' + currentSection);
+            if (currentSectionEl) {
+                currentSectionEl.classList.remove('visible');
+            }
+            
+            // Update current section number
             currentSection = sectionNum;
+            
+            // Show new section
             const newSection = document.getElementById('section' + sectionNum);
-            newSection.classList.add('visible');
+            if (newSection) {
+                newSection.classList.add('visible');
+                
+                // Scroll to new section
+                setTimeout(function() {
+                    newSection.scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'start'
+                    });
+                }, 50);
+            }
+            
+            // Update progress dots
             updateProgressDots();
             
-            if (sectionNum === 2) animatePages();
-            if (sectionNum === 5) animateBooks();
-            if (sectionNum === 6) animateReasons();
-            
-            // Smooth scroll to top of new section
-            setTimeout(function() {
-                newSection.scrollIntoView({ 
-                    behavior: 'smooth', 
-                    block: 'center',
-                    inline: 'nearest'
-                });
-            }, 100);
+            // Trigger animations for specific sections
+            if (sectionNum === 2) {
+                setTimeout(animatePages, 200);
+            }
+            if (sectionNum === 5) {
+                setTimeout(animateBooks, 200);
+            }
+            if (sectionNum === 6) {
+                setTimeout(animateReasons, 200);
+            }
         }
 
         function goToSection(sectionNum) {
